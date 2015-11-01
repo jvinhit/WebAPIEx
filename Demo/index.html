@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+    <div>
+        <h1>List of product</h1>
+        <ul id="list"></ul>
+    </div>
+    <div>
+        Enter ID : <input id="id" type="text" size="5" name="name" value="" />
+        <input type="button" name="btnSearch" value="Search" onclick="search();" />
+        <p id="result"></p>
+    </div>
+    <script src="http://ajax.aspnetcdn.com/ajax/jquery/jquery-1.9.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $.getJSON("api/product/", function (data) {
+                $.each(data, function (key, value) {
+                    var s = value.Name + "  ==== Price  = " + value.Price;
+                    var li = $("<li></li>").text(s);
+                    $("#list").append(li);
+                });
+            });
+        });
+        function search()
+        {
+            var id = $("#id").val();
+            $.getJSON("api/product/" + id, function (data) {
+                var s = data.Name + " - Price = " + data.Price;
+                $("#result").html(s);
+            });
+        }
+    </script>
+</body>
+</html>
+ 
